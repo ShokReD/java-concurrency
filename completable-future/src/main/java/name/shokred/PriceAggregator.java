@@ -30,7 +30,10 @@ public class PriceAggregator {
         try {
             CompletableFuture
                     .allOf(list.toArray(new CompletableFuture[0]))
-                    .get(3, TimeUnit.SECONDS);
+                    // Результаты JMH показали что на QuickPriceRetriever получалось
+                    // от 10^(-5) до 10^(-4) секунд на 1 операцию выгрузки.
+                    // Поэтому принимаем худший вариант (10_000 мкс) и вычитаем его из 3 секунд
+                    .get(2_990_000, TimeUnit.MICROSECONDS);
         } catch (InterruptedException | ExecutionException | TimeoutException ignored) { // NOSONAR
         }
 

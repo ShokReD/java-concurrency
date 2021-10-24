@@ -5,15 +5,19 @@ plugins {
 group 'name.shokred'
 version '1.0-SNAPSHOT'
 
-repositories {
-    mavenCentral()
-}
+subprojects {
+    apply(plugin: "java")
 
-dependencies {
-    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.7.0'
-    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.7.0'
-}
+    repositories {
+        mavenCentral()
+    }
 
-test {
-    useJUnitPlatform()
+    dependencies {
+        testImplementation("org.junit.jupiter:junit-jupiter-api:5.7.0")
+        testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.7.0")
+    }
+
+    test {
+        useJUnitPlatform()
+    }
 }

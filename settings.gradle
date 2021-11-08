@@ -1,3 +1,4 @@
 rootProject.name = 'java-concurrency'
 
 include 'completable-future'
+include 'atomics'

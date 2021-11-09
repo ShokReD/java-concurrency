@@ -2,7 +2,7 @@ package name.shokred;
 
 import java.util.concurrent.atomic.AtomicBoolean;
 
-public class Test {
+public class TryLockTest {
     private ComplexObject state;
     private String version;
     private final AtomicBoolean locked = new AtomicBoolean(false);

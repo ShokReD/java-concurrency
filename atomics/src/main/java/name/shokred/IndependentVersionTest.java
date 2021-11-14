@@ -11,11 +11,7 @@ public class IndependentVersionTest {
     }
 
     public void updateState(ComplexObject newState) {
-        while (true) {
-            if (state.compareAndSet(state.get(), new StateWithVersion(newState, getVersion()))) {
-                break;
-            }
-        }
+        state.compareAndSet(state.get(), new StateWithVersion(newState, getVersion()));
     }
 
     public String getVersion() {

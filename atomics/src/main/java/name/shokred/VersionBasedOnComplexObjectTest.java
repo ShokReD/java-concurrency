@@ -10,12 +10,10 @@ public class VersionBasedOnComplexObjectTest {
     }
 
     public void updateState(ComplexObject newState) {
-        while (true) {
-            final String newVersion = getVersion();
-            if (state.compareAndSet(state.get(), new StateWithVersion(newState, newVersion))) {
-                break;
-            }
-        }
+        String newVersion;
+        do {
+            newVersion = getVersion();
+        } while (!state.compareAndSet(state.get(), new StateWithVersion(newState, newVersion)));
     }
 
     public String getVersion() {

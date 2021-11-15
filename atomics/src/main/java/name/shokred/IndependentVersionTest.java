@@ -11,7 +11,8 @@ public class IndependentVersionTest {
     }
 
     public void updateState(ComplexObject newState) {
-        state.compareAndSet(state.get(), new StateWithVersion(newState, getVersion()));
+        // Можно было переписать на volatile, но в задании сказано использовать классы из лекции :)
+        state.set(new StateWithVersion(newState, getVersion()));
     }
 
     public String getVersion() {

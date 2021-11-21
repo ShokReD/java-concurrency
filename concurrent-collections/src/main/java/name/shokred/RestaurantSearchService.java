@@ -15,7 +15,7 @@ public class RestaurantSearchService {
     }
 
     public void addToStat(final String restaurantName) {
-        this.stat.compute(restaurantName, (name, count) -> count == null ? 1 : count + 1);
+        this.stat.merge(restaurantName, 1, Integer::sum);
     }
 
     public Set<String> printStat() {

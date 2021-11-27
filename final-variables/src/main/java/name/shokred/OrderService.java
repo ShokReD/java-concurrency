@@ -6,14 +6,14 @@ import java.util.Map;
 
 public class OrderService {
 
-    private Map<Long, Order> currentOrders = new HashMap<>();
+    private final Map<Long, Order> currentOrders = new HashMap<>();
     private long nextId = 0L;
 
     private synchronized long nextId() {
         return nextId++;
     }
 
-    public synchronized long createOrder(List<Item> items) {
+    public synchronized long createOrder(final List<Item> items) {
         long id = nextId();
         Order order = new Order(items);
         order.setId(id);
@@ -21,7 +21,8 @@ public class OrderService {
         return id;
     }
 
-    public synchronized void updatePaymentInfo(long cartId, PaymentInfo paymentInfo) {
+    public synchronized void updatePaymentInfo(final long cartId,
+                                               final PaymentInfo paymentInfo) {
         currentOrders.get(cartId).setPaymentInfo(paymentInfo);
         if (currentOrders.get(cartId).checkStatus()) {
             deliver(currentOrders.get(cartId));
@@ -29,12 +30,12 @@ public class OrderService {
         }
     }
 
-    public synchronized void setPacked(long cartId) {
+    public synchronized void setPacked(final long cartId) {
         currentOrders.get(cartId).setPacked(true);
         if (currentOrders.get(cartId).checkStatus()) {
             deliver(currentOrders.get(cartId));
         }
     }
 
-    private synchronized void deliver(Order order) { /*...*/ }
+    private synchronized void deliver(final Order order) { /*...*/ }
 }

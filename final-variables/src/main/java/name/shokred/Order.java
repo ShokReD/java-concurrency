@@ -14,7 +14,7 @@ public class Order {
     private boolean isPacked;
     private Status status;
 
-    public Order(List<Item> items) {
+    public Order(final List<Item> items) {
         this.items = items;
     }
 

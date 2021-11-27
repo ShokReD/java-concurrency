@@ -9,13 +9,15 @@ import java.util.List;
 @Getter
 @Setter
 public class Order {
-    private Long id;
+    private final long id;
     private final List<Item> items;
     private PaymentInfo paymentInfo;
     private boolean isPacked;
     private Status status;
 
-    public Order(final List<Item> items) {
+    public Order(final long id,
+                 final List<Item> items) {
+        this.id = id;
         this.items = orEmpty(items);
     }
 

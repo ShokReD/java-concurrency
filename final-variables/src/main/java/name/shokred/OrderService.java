@@ -3,14 +3,15 @@ package name.shokred;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.atomic.AtomicLong;
 
 public class OrderService {
 
     private final Map<Long, Order> currentOrders = new HashMap<>();
-    private long nextId = 0L;
+    private final AtomicLong nextId = new AtomicLong(0L);
 
-    private synchronized long nextId() {
-        return nextId++;
+    private long nextId() {
+        return nextId.getAndIncrement();
     }
 
     public synchronized long createOrder(final List<Item> items) {

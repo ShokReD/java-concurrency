@@ -14,8 +14,8 @@ public class OrderService {
     }
 
     public synchronized long createOrder(final List<Item> items) {
-        long id = nextId();
-        Order order = new Order(items);
+        final long id = nextId();
+        final Order order = new Order(items);
         order.setId(id);
         currentOrders.put(id, order);
         return id;

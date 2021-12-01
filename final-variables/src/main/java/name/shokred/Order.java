@@ -21,12 +21,8 @@ public class Order {
         this.items = orEmpty(items);
     }
 
-    public synchronized boolean checkStatus() {
-        if (!items.isEmpty() && paymentInfo != null && isPacked) {
-            status = Status.DELIVERED;
-            return true;
-        }
-        return false;
+    public boolean checkStatus() {
+        return !items.isEmpty() && paymentInfo != null && isPacked;
     }
 
     private static <T> List<T> orEmpty(final List<T> list) {

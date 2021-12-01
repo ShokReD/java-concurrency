@@ -34,6 +34,7 @@ public class OrderService {
         currentOrders.get(cartId).setPacked(true);
         if (currentOrders.get(cartId).checkStatus()) {
             deliver(currentOrders.get(cartId));
+            currentOrders.get(cartId).setStatus(Status.DELIVERED);
         }
     }
 

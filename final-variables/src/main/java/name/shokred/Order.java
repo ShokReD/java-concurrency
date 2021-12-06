@@ -1,24 +1,33 @@
 package name.shokred;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.With;
 
 import java.util.Collections;
 import java.util.List;
 
-@Getter
-@Setter
+@With
 public class Order {
     private final long id;
     private final List<Item> items;
-    private PaymentInfo paymentInfo;
-    private boolean isPacked;
-    private Status status;
+    private final PaymentInfo paymentInfo;
+    private final boolean isPacked;
+    private final Status status;
 
     public Order(final long id,
                  final List<Item> items) {
+        this(id, orEmpty(items), null, false, null);
+    }
+
+    public Order(final long id,
+                 final List<Item> items,
+                 final PaymentInfo paymentInfo,
+                 final boolean isPacked,
+                 final Status status) {
         this.id = id;
-        this.items = orEmpty(items);
+        this.items = items;
+        this.paymentInfo = paymentInfo;
+        this.isPacked = isPacked;
+        this.status = status;
     }
 
     public boolean checkStatus() {

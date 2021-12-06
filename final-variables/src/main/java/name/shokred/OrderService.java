@@ -22,25 +22,20 @@ public class OrderService {
     }
 
     public void updatePaymentInfo(final long cartId, final PaymentInfo paymentInfo) {
-        currentOrders.computeIfPresent(cartId, (id, order) -> {
-            order.setPaymentInfo(paymentInfo);
-            if (order.checkStatus()) {
-                deliver(order);
-                order.setStatus(Status.DELIVERED);
-            }
-            return order;
-        });
+        final Order currentOrder = currentOrders.get(cartId);
+        final Order newOrder = currentOrder.withPaymentInfo(paymentInfo);
+        currentOrders.put(cartId, newOrder.checkStatus() ? deliveredOrder(newOrder) : newOrder);
     }
 
     public void setPacked(final long cartId) {
-        currentOrders.computeIfPresent(cartId, (id, order) -> {
-            order.setPacked(true);
-            if (order.checkStatus()) {
-                deliver(order);
-                order.setStatus(Status.DELIVERED);
-            }
-            return order;
-        });
+        final Order currentOrder = currentOrders.get(cartId);
+        final Order newOrder = currentOrder.withPacked(true);
+        currentOrders.put(cartId, newOrder.checkStatus() ? deliveredOrder(newOrder) : newOrder);
+    }
+
+    private Order deliveredOrder(final Order order) {
+        deliver(order);
+        return order.withStatus(Status.DELIVERED);
     }
 
     private void deliver(final Order order) { /*...*/ }

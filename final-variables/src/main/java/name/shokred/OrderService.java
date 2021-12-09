@@ -23,14 +23,18 @@ public class OrderService {
 
     public void updatePaymentInfo(final long cartId, final PaymentInfo paymentInfo) {
         final Order currentOrder = currentOrders.computeIfPresent(cartId, (id, order) -> order.withPaymentInfo(paymentInfo));
-        deliver(currentOrder);
-        currentOrders.put(cartId, currentOrder);
+        if (currentOrder != null && currentOrder.checkStatus()) {
+            deliver(currentOrder);
+            currentOrders.put(cartId, currentOrder.withStatus(Status.DELIVERED));
+        }
     }
 
     public void setPacked(final long cartId) {
         final Order currentOrder = currentOrders.computeIfPresent(cartId, (id, order) -> order.withPacked(true));
-        deliver(currentOrder);
-        currentOrders.put(cartId, currentOrder);
+        if (currentOrder != null && currentOrder.checkStatus()) {
+            deliver(currentOrder);
+            currentOrders.put(cartId, currentOrder.withStatus(Status.DELIVERED));
+        }
     }
 
     private void deliver(final Order order) { /*...*/ }

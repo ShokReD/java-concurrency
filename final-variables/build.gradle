@@ -1,0 +1,12 @@
+plugins {
+    id 'java'
+}
+
+ext {
+    lombokVersion = "1.18.12"
+}
+
+dependencies {
+    annotationProcessor("org.projectlombok:lombok:$lombokVersion")
+    compileOnly("org.projectlombok:lombok:$lombokVersion")
+}
